@@ -1,20 +1,26 @@
-version: '3' # specify docker-compose version
+version: '3'
 
-# Define the services/containers to be run
 services:
-  angular: # name of the first service
-    build: angular-client # specify the directory of the Dockerfile
+  angular:
+    build: client
+    command: nodemon angular-client
+    volumes:
+      - ./client:/app
     ports:
-      - "4200:4200" # specify port forewarding
+      - "4200:4200"
+      - "49153:49153"
 
-  express: #name of the second service
-    build: express-server # specify the directory of the Dockerfile
+  express:
+    build: server
+    command: nodemon server.js
+    volumes:
+      - ./server:/app
     ports:
-      - "3000:3000" #specify ports forewarding
+      - "3000:3000"
     links:
-      - database # link this service to the database service
+      - database
 
-  database: # name of the third service
-    image: mongo # specify image to build container from
+  database:
+    image: mongo
     ports:
-      - "27017:27017" # specify port forewarding
+      - "27017:27017"
