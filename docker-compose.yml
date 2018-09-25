@@ -33,12 +33,28 @@ services:
     ports:
       - "3000:3000"
     links:
-      - database
+      - primary
 
-  database:
-    image: mongo
+  primary:
+    image: mongo:4.1.1
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs" ]
     ports:
       - "27017:27017"
+  
+  secondary:
+    image: mongo:4.1.1
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs" ]
+    ports:
+      - "27018:27017"
+  
+  mongoreplica:
+    image: mongo:4.1.1
+    volumes:
+      - ./scripts:/scripts
+    restart: always
+    entrypoint: [ "bash", "/scripts/mongosetup.sh" ]
 
   transpiler:
     build: server

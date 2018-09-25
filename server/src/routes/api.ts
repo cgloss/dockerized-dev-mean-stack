@@ -5,7 +5,7 @@ import { Router, Request, Response } from 'express';
 const router: Router = Router();
 
 // MongoDB URL from the docker-compose file
-const dbHost = 'mongodb://database/mean-docker';
+const dbHost = 'mongodb://primary/mean-docker';
 
 // Connect to mongodb
 connect(dbHost);
@@ -26,7 +26,7 @@ router.get('/', (req: Request, res: Response) => {
 });
 
 /* GET all users. */
-router.get('/users', (req, res) => {
+router.get('/users', (req: Request, res: Response) => {
     User.find({}, (err, users) => {
         if (err) res.status(500).send(err)
 
