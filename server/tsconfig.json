@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "alwaysStrict": true,
+        "experimentalDecorators": true,
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "noImplicitThis": true,
+        "outDir": "./dist/",
+        "pretty": true,
+        "removeComments": false,
+        "sourceMap": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "target": "es6",
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "**/*.spec.ts",
+        "**/*.test.ts"
+    ],
+    "include": [
+        "src/**/*.ts"
+    ]
+}

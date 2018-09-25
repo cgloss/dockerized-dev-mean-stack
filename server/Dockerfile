@@ -7,9 +7,8 @@ RUN mkdir -p /app
 # Change directory so that our commands run inside this new directory
 WORKDIR /app
 
-# Install nodemon for hot reload
-RUN npm install -g nodemon
-RUN npm config set registry https://registry.npmjs.org
+# Install utilities, nodemon for hot reload
+RUN npm install -g nodemon typescript ts-node
 
 # Copy dependency definitions
 COPY package.json /app/package.json

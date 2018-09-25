@@ -1,21 +1,35 @@
 version: '3'
 
+volumes:
+  
+  server_vol:
+    driver_opts:
+      type: none
+      device: $PWD/server
+      o: bind
+
 services:
+
   angular:
     build: client
     command: nodemon angular-client
     volumes:
       - './client:/usr/src/app'
       - '/usr/src/app/node_modules'
+    depends_on:
+      - "express"
     ports:
       - "4200:4200"
       - "49153:49153"
 
   express:
-    build: server
-    command: nodemon server.js
+    build: server 
+    # nodemon should watch the dist directory
+    command: nodemon ./dist/server.js -w dist/
     volumes:
-      - ./server:/app
+      - server_vol:/app
+    depends_on:
+      - "transpiler"
     ports:
       - "3000:3000"
     links:
@@ -25,3 +39,10 @@ services:
     image: mongo
     ports:
       - "27017:27017"
+
+  transpiler:
+    build: server
+    volumes:
+      - server_vol:/app
+    # typescript should watch the src directory
+    command: tsc -w -p .

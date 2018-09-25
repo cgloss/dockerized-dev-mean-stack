@@ -1,5 +1,5 @@
 // Get dependencies
-const express = require('express');
+import * as express from "express";
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
